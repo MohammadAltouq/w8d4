@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route  } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
 import { Home, Dashboard, SignIn } from './components';
+import { theme } from './Theme/theme'
 import './styles.css'
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 
 const root = ReactDOM.createRoot(
@@ -10,20 +14,17 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-
-      <Router>
-        <Routes>
-          <Route path='/' element={<Home title  ={'Drones Inventory'}/>} />
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/signin' element={<SignIn />} />
-
-
-        </Routes>
-
-
-      </Router>
-
-    
+    <Provider store = {store}>
+      <ThemeProvider theme={theme}>
+          <Router>
+            <Routes>
+              <Route path='/' element={<Home title  ={'Cars Inventory'}/>} />
+              <Route path='/dashboard' element={<Dashboard />} />
+              <Route path='/signin' element={<SignIn />} />
+            </Routes>
+          </Router>
+      </ThemeProvider>
+    </Provider>
   </React.StrictMode>,
 
 );

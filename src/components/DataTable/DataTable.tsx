@@ -1,61 +1,104 @@
-import React from 'react';
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import React, { useState } from 'react';
+import Box from '@mui/icons-material';
+import { DataGrid, GridColDef, GridSelectionModel } from '@mui/x-data-grid';
+import { serverCalls } from '../../api';
+import { useGetData } from '../../custom-hooks'; 
+import { Button,Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle } from '@mui/material'; 
+import { CarForm } from '../CarForm'
+
+
+interface GridData{
+  data:{
+    id?:string
+  }
+}
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 90 },
   {
-    field: 'firstName',
-    headerName: 'First name',
-    width: 150,
-    editable: true,
+      field: 'make',
+      headerName: 'Make',
+      width: 150,
+      editable: true,
   },
   {
-    field: 'lastName',
-    headerName: 'Last name',
-    width: 150,
-    editable: true,
+      field: 'model',
+      headerName: 'Model',
+      width: 150,
+      editable: true,
   },
   {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 110,
-    editable: true,
+      field: 'price',
+      headerName: 'Price',
+      width: 110,
+      editable: true,
+      type: 'number'
   },
   {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-    valueGetter: (params: GridValueGetterParams) =>
-      `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+      field: 'mpg',
+      headerName: 'MPG',
+      width: 160
   },
+  {
+      field: 'max_speed',
+      headerName: 'Max Speed',
+      width: 110,
+      type: 'number'
+  },
+
 ];
 
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
 export const DataTable = () => {
-    return (
-      <div style={{ height: 400, width: '100%' }}>
-          <h2>Drones In Inventory</h2>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          checkboxSelection
-          disableSelectionOnClick
-        />
-      </div>
-    );
+  let { carData, getData } = useGetData();
+  let[open, setOpen] = useState(false);;
+
+  let[gridData, setData] = useState<GridSelectionModel>([])
+
+  let handleOpen = () => {
+    setOpen(true)
   }
+
+  let handleClose = () => {
+    setOpen(false)
+  }
+
+  let deleteData = () => {
+    serverCalls.delete(`${gridData[0]}`)
+    getData()
+  }
+
+  console.log(gridData)
+
+
+  return (
+    <div style={{ height: 400, width: '100%' }}>
+        <h2>Drones In Inventory</h2>
+      <DataGrid
+        rows={carData}
+        columns={columns}
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+        checkboxSelection
+        onSelectionModelChange={(newSelectionModel) =>{setData(newSelectionModel)}}
+        {...carData}
+      />
+      <Button onClick={handleOpen}>Update</Button>
+      <Button variant="contained" color="secondary" onClick={deleteData}>Delete</Button>
+      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+          <DialogTitle id="form-dialog-title">Update A Drone</DialogTitle>
+          <DialogContent>
+            <DialogContentText>Drone id: {gridData[0]}</DialogContentText>
+              <CarForm id={`${gridData[0]}`}/>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick = {handleClose} color="primary">Cancel</Button>
+            <Button onClick={handleClose} color = "primary">Done</Button> 
+          </DialogActions>
+      </Dialog>
+    </div>
+  );
+}

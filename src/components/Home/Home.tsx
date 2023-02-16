@@ -1,7 +1,7 @@
 import React from 'react';
 import { margin, styled, textTransform } from '@mui/system';
 import { Button } from '@mui/material';
-import cars from '../../assets/images/car.jpg';
+import car_img from '../../assets/images/car.jpg'
 import { Link } from 'react-router-dom'
 
 
@@ -42,7 +42,7 @@ const NavA = styled(Link)({
     color: 'black'
 })
 const Main = styled('main')( {
-    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${cars});`,
+    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${car_img});`,
     width: '100%',
     height: '100%',
     backgroundSize: 'cover',
@@ -58,6 +58,11 @@ const MainText = styled('div')({
     transform: 'translate(-50%, -50%)',
     color: 'white'
 })
+
+
+
+
+
 export const Home = ( props:Props) => {
  
     return (
@@ -81,8 +86,8 @@ export const Home = ( props:Props) => {
             <Main>
                 <MainText>
                     <h1>{props.title}</h1>
-                    <p> Drones are fly.</p>
-                    <Button color='primary' variant='contained' component={Link} to="/dashboard">See the Drones</Button>
+                    <p> Cars are FAST!</p>
+                    <Button color='primary' variant='contained' component={Link} to="/dashboard">See your cars</Button>
                 </MainText>
             </Main>
 
