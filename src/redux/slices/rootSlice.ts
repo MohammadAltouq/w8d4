@@ -6,7 +6,6 @@ export interface CarState {
     price: number,
     mpg: string,
     max_speed: number,
-
 }
 
 const initialState: CarState = {
@@ -16,7 +15,6 @@ const initialState: CarState = {
     mpg: '',
     max_speed: 0,
 }
-
 const rootSlice = createSlice({
     name: "root",
     initialState,
@@ -29,7 +27,6 @@ const rootSlice = createSlice({
     }
 })
 
-// Export Reducer
 export const reducer = rootSlice.reducer;
 export const {
     chooseMake,

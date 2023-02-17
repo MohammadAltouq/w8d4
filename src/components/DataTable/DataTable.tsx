@@ -73,10 +73,10 @@ export const DataTable = () => {
 
   console.log(gridData)
 
-
-  return (
+  if(localStorage.getItem('myAuth') == 'true'){
+    return (
     <div style={{ height: 400, width: '100%' }}>
-        <h2>Drones In Inventory</h2>
+        <h2>Cars In Inventory</h2>
       <DataGrid
         rows={carData}
         columns={columns}
@@ -101,4 +101,11 @@ export const DataTable = () => {
       </Dialog>
     </div>
   );
+}else{
+  return (
+    <div>
+      <h3>Please Sign In to view your Cars</h3>
+    </div>
+    )
+  }
 }

@@ -24,8 +24,7 @@ import { useNavigate } from "react-router-dom";
 import { theme } from "../../Theme/theme";
 import { DataTable } from '../DataTable';
 import { CarForm } from '../CarForm'
-
-
+import { signOut, getAuth } from 'firebase/auth'
 
 const drawerWidth = 240;
 
@@ -104,7 +103,6 @@ export const Dashboard = () => {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-      // Handle Dialog Open/Close
     const handleDialogClickOpen = () => {
       setDialogOpen(true);
     }
@@ -113,11 +111,16 @@ export const Dashboard = () => {
       setDialogOpen(false);
     }
 
+      const itemsList2 = [
+        {text: 'Home', onClick: () => navigate('/')},
+      ]
 
     const itemsList = [
         {text: 'Home', onClick: () => navigate('/')},
+
         {text: 'Sign In',onClick: () => navigate('/signin')}
     ]
+
     return (
         <Box sx={{display:'flex'}} >
           <CssBaseline />
@@ -136,11 +139,9 @@ export const Dashboard = () => {
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" noWrap> Dashboard</Typography>
-              <Button sx={ myStyles.toolbarButton } onClick={handleDialogClickOpen}>Create New Drone</Button>
-              
-              {/*Dialog Pop Up begin */}
+              <Button sx={ myStyles.toolbarButton } onClick={handleDialogClickOpen}>Create New Car</Button>
               <Dialog open={dialogOpen} onClose={handleDialogClickClose} aria-labelledby="form-dialog-title">
-              <DialogTitle id="form-dialog-title">Add New Drone</DialogTitle>
+              <DialogTitle id="form-dialog-title">Add New Car</DialogTitle>
               <DialogContent>
                 <DialogContentText>Add A New Car</DialogContentText>
                   <CarForm />

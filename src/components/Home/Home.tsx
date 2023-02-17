@@ -4,13 +4,9 @@ import { Button } from '@mui/material';
 import car_img from '../../assets/images/car.jpg'
 import { Link } from 'react-router-dom'
 
-
-
 interface Props{
     title: string;
 }
-
-// Create Styled Components with styled-components
 const Root = styled("div")({
     padding: 0,
     margin: 0
@@ -35,7 +31,6 @@ const LogoNavigation = styled('ul')( {
     textDecoration: 'none',
     display: 'flex'
 })
-
 const NavA = styled(Link)({
     display: 'block',
     padding: '1em',
@@ -58,39 +53,66 @@ const MainText = styled('div')({
     transform: 'translate(-50%, -50%)',
     color: 'white'
 })
-
-
-
-
-
 export const Home = ( props:Props) => {
- 
-    return (
-        <Root>
-            <NavbarContainer>
-                <Logo>
-                    <LogoA to="/">Brand</LogoA>
-                </Logo>
-                <LogoNavigation>
-                    <li>
-                        <NavA to ="/">Home</NavA>
-                    </li>
-                    <li>
-                        <NavA to ="/dashboard">Dashboard</NavA>
-                    </li>
-                    <li>
-                        <NavA to="/signin">Sign in</NavA>
-                    </li>
-                </LogoNavigation>
-            </NavbarContainer>
-            <Main>
-                <MainText>
-                    <h1>{props.title}</h1>
-                    <p> Cars are FAST!</p>
-                    <Button color='primary' variant='contained' component={Link} to="/dashboard">See your cars</Button>
-                </MainText>
-            </Main>
-
-        </Root>
-    )
+    if(localStorage.getItem('myAuth') == 'true'){
+        return (
+            <Root>
+                <NavbarContainer>
+                    <Logo>
+                        <LogoA to="/">Brand</LogoA>
+                    </Logo>
+                    <LogoNavigation>
+                        <li>
+                            <NavA to ="/">Home</NavA>
+                        </li>
+                        <li>
+                            <NavA to ="/dashboard">Dashboard</NavA>
+                        </li>
+                        <li>
+                            <NavA to="/signin">Profile</NavA>
+                        </li>
+                    </LogoNavigation>
+                </NavbarContainer>
+                <Main>
+                    <MainText>
+                        <h1>{props.title}</h1>
+                        <p> Cars are FAST!</p>
+                        <Button color='primary' variant='contained' component={Link} to="/dashboard">See your cars</Button>
+                    </MainText>
+                </Main>
+            </Root>
+        )
+    }
+    else{
+        return (
+            <Root>
+                <NavbarContainer>
+                    <Logo>
+                        <LogoA to="/">Brand</LogoA>
+                    </Logo>
+                    <LogoNavigation>
+                        <li>
+                            <NavA to ="/">Home</NavA>
+                        </li>
+                        <li>
+                            <NavA to ="/dashboard">Dashboard</NavA>
+                        </li>
+                        <li>
+                            <NavA to="/signin">Sign In</NavA>
+                        </li>
+                        <li>
+                            <NavA to="/signup">Sign Up</NavA>
+                        </li>
+                    </LogoNavigation>
+                </NavbarContainer>
+                <Main>
+                    <MainText>
+                        <h1>{props.title}</h1>
+                        <p> Cars are FAST!</p>
+                        <Button color='primary' variant='contained' component={Link} to="/dashboard">See your cars</Button>
+                    </MainText>
+                </Main>
+            </Root>
+        )
+    }
 }

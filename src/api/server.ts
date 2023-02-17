@@ -34,7 +34,7 @@ export const serverCalls = {
     },
     update: async (id:string, data:any = {}) => {
         const response = await fetch(`https://cars32135154321.glitch.me/api/cars/${id}`, {
-            method: 'POST',
+            method: 'put',
             headers: {
                 'Content-Type': 'application/json',
                 'x-access-token': `Bearer ${token}`
